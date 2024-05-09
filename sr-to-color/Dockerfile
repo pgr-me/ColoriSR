@@ -17,7 +17,7 @@ RUN wget https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.1/RealESR
 
 # Copy over preprocessing script and config file
 COPY preprocess_data.py /workspace/Real-ESRGAN/
-COPY finetune_colorizer_sr.yml /workspace/Real-ESRGAN/options/ 
+COPY sr-to-color/finetune_colorizer_sr.yml /workspace/Real-ESRGAN/options/
 
 # Download MS Coco data and preprocess it
 RUN python preprocess_data.py
