@@ -19,12 +19,3 @@ RUN wget https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.1/RealESR
 COPY preprocess_data.py /workspace/Real-ESRGAN/
 COPY sr-to-color/finetune_colorizer_sr.yml /workspace/Real-ESRGAN/options/
 
-# Download MS Coco data and preprocess it
-RUN python preprocess_data.py
-
-# Generate metadata for finetuning
-RUN python scripts/generate_meta_info_pairdata.py --input datasets/coco/tr/hq datasets/coco/tr/lq --meta_info datasets/coco/meta_info/colorizer_sr.txt
-
-# Finetune
-RUN python realesrgan/train.py -opt options/finetune_colorizer_sr.yml --auto_resume
-
