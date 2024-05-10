@@ -1,6 +1,6 @@
 # ColoriSR
 
-This repository is a dual colorization and super resolution.
+This repository is a dual colorization and super resolution. An AWS `g5.xlarge` instance, which has 24GB of VRAM. Docker is required to reproduce the results of the experiments.
 
 ## Setup
 
@@ -13,7 +13,7 @@ To reproduce the results of the `SR-to-Color` component of this project, follow 
 Build the `SR-to-Color` image:
 
 ```shell
-$ docker build -t sr-to-color -f sr-to-color/Dockerfile .
+$ docker build -t sr-to-color -f sr_to_color/Dockerfile .
 ```
 
 Create the container from the image:
@@ -50,4 +50,35 @@ python realesrgan/train.py -opt options/finetune_colorizer_sr.yml --auto_resume
 
 ### Color-to-SR
 
-TODO
+This module represents future work for this project. In this module, we aim to achieve dual colorization from pretraining a colorizing a U-Net based GAN before fine-tuning the generator and discriminator on low resolution, grayscale images. Thus far, we've pretrained the colorizer model from scratch. The next step is to do the fine tuning and compare the results to those SR-to-Color produced.
+
+To run the pretraining, first `cd` into the root directory of this repository.
+
+Build the `Color-to-SR` image:
+
+
+```shell
+$ docker build -t color_to_src -f color_to_src/Dockerfile .
+```
+
+Create the container from the image:
+```shell
+$ docker run -dit --gpus all --name color-to-sr color-to-sr
+```
+
+Exec into the container:
+
+```shell
+$ docker exec -ti color-to-sr bash
+```
+
+
+In the container, you'll begin in `/workspace/`. To initiate the pretraining, execute the following command. This step took over 10 hours to complete on an AWS `g5.xlarge` instance.
+
+```shell
+$ python -m color_to_sr.pretrain
+```
+
+Next, execute the `preprocess_data.py` script as instructed above.
+
+At that point, you're all caught up! The next step for us is to write the fine-tuning script to complete the `color_to_sr` module.
