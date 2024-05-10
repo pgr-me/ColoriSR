@@ -1,6 +1,6 @@
 # ColoriSR
 
-This repository is a dual colorization and super resolution. An AWS `g5.xlarge` instance, which has 24GB of VRAM. Docker is required to reproduce the results of the experiments.
+This repository is a dual colorization and super resolution. An AWS `g5.xlarge` instance, which has 24GB of VRAM. Docker is required to reproduce the results of the experiments. This repository uses `git lfs` to manage large log files.
 
 ## Setup
 
